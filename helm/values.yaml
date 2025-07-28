@@ -1,0 +1,13 @@
+replicaCount: 2
+
+image:
+  repository: your-registry/mensa-server
+  tag: latest
+
+service:
+  type: ClusterIP
+  port: 80
+
+ingress:
+  enabled: true
+  host: mensa.example.com
