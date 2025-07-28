@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mensa-config
+  namespace: mensa
+data:
+  database.url: "jdbc:postgresql://postgres:5432/mensa"
+  app.environment: "production"
+  logging.level: "INFO"
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: mensa-secrets
+  namespace: mensa
+type: Opaque
+stringData:
+  database.username: "admin"
+  database.password: "password"
+  jwt.secret: "your-secret-key"

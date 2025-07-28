@@ -2,37 +2,59 @@
 
 A comprehensive repository containing ready-to-use DevOps templates and configurations for practical exam preparation.
 
-## Repository Structure
+## 📁 Repository Structure
 
 ```
-├── docker/           # Multi-stage Dockerfiles
-│   ├── client/       # Node.js + Nginx frontend
-│   └── server/       # Java Spring Boot backend
-├── k8s/              # Kubernetes manifests
+├── .github/workflows/    # CI/CD pipelines
+├── docker/              # Multi-stage Dockerfiles
+│   ├── client/          # Node.js + Nginx frontend
+│   └── server/          # Java Spring Boot backend
+├── k8s/                 # Kubernetes manifests
 │   ├── deployment.yaml
 │   ├── service.yaml
-│   └── ingress.yaml
-├── helm/             # Helm chart templates
+│   ├── ingress.yaml
+│   ├── configmap.yaml   # Configuration management
+│   └── statefulset.yaml # Database deployment
+├── helm/                # Helm chart templates
 │   ├── Chart.yaml
 │   ├── values.yaml
 │   └── templates/
-└── terraform/        # Infrastructure as Code
-    ├── main.tf
-    ├── variables.tf
-    └── outputs.tf
+├── terraform/           # Infrastructure as Code
+│   ├── main.tf
+│   ├── variables.tf
+│   └── outputs.tf
+├── monitoring/          # Observability stack
+│   ├── docker-compose.monitoring.yml
+│   ├── prometheus.yml
+│   ├── alerts/          # Prometheus alerting rules
+│   └── grafana/         # Dashboards & provisioning
+├── scripts/             # Automation scripts
+│   ├── quick-deploy.sh  # Fast deployment
+│   └── k8s-deploy.sh    # Kubernetes deployment
+├── docker-compose.yml   # Multi-service orchestration
+├── .env.example         # Environment template
+├── DEPLOYMENT-STEPS.md  # 📋 Manual K8s deployment guide
+├── DOCKER-STEPS.md      # 🐳 Docker commands reference  
+├── HELM-STEPS.md        # ⛵ Helm deployment guide
+├── TERRAFORM-STEPS.md   # 🏗️ Terraform commands reference
+├── MONITORING-STEPS.md  # 🚨 Prometheus & Grafana alerting
+└── EXAM-SCENARIOS.md    # 🎯 Sample exam questions & solutions
 ```
 
-## Quick Reference
+## 🚀 Quick Reference
 
-### Docker
+### Docker & Docker Compose
 - **Multi-stage builds** for optimized container images
 - Frontend: Node.js build → Nginx runtime
 - Backend: Maven build → OpenJDK runtime
+- **Full-stack orchestration** with database
 
 ### Kubernetes
 - Complete deployment configuration with 2 replicas
 - ClusterIP service for internal communication
 - Nginx ingress with path-based routing
+- **ConfigMaps & Secrets** for configuration management
+- **StatefulSets** for stateful applications (database)
 
 ### Helm
 - Parameterized chart for flexible deployments
@@ -44,11 +66,56 @@ A comprehensive repository containing ready-to-use DevOps templates and configur
 - Namespace and deployment resources
 - Infrastructure as Code examples
 
-## Usage Tips
+### CI/CD & Monitoring
+- **GitHub Actions** pipeline for automated deployment
+- **Prometheus & Grafana** for metrics and visualization
+- **Alertmanager** for alert routing and notifications
+- **Custom alerting rules** for common monitoring scenarios
+- Health checks and rollout strategies
 
-1. **Docker**: Build images with `docker build -t app:tag .`
-2. **K8s**: Apply with `kubectl apply -f k8s/`
-3. **Helm**: Deploy with `helm install mensa-app ./helm`
-4. **Terraform**: Initialize and apply with `terraform init && terraform apply`
+## 💡 Usage Tips
 
-Perfect for hands-on DevOps exam preparation! 🎯
+1. **Manual Deployment**: Follow step-by-step guides in `*-STEPS.md` files
+2. **Docker**: Build images with `docker build -t app:tag .`
+3. **Docker Compose**: `docker-compose up -d` for multi-service deployment
+4. **K8s**: Follow `DEPLOYMENT-STEPS.md` for proper namespace deployment
+5. **Helm**: Use `HELM-STEPS.md` for chart-based deployments
+6. **Terraform**: Follow `TERRAFORM-STEPS.md` for infrastructure as code
+7. **Monitoring**: `docker-compose -f monitoring/docker-compose.monitoring.yml up -d`
+8. **Alerts**: Access Prometheus (9090), Alertmanager (9093), Grafana (3001)
+
+### 🔧 Essential Exam Commands
+```bash
+# Docker essentials
+docker build -t myapp .
+docker run -p 8080:8080 myapp
+docker-compose up -d
+
+# Kubernetes with namespace
+kubectl create namespace mensa
+kubectl apply -f . -n mensa
+kubectl get pods -n mensa
+kubectl logs deployment/myapp -n mensa
+kubectl port-forward svc/myapp 8080:80 -n mensa
+
+# Helm operations
+helm install myapp ./chart
+helm upgrade myapp ./chart
+helm rollback myapp 1
+
+# Terraform workflow
+terraform init
+terraform plan
+terraform apply
+terraform destroy
+```
+
+### 📋 Step-by-Step Guides
+- **[Kubernetes Deployment](DEPLOYMENT-STEPS.md)** - Complete manual K8s deployment
+- **[Docker Commands](DOCKER-STEPS.md)** - Container management reference
+- **[Helm Operations](HELM-STEPS.md)** - Chart deployment guide  
+- **[Terraform Workflow](TERRAFORM-STEPS.md)** - Infrastructure as code steps
+- **[Monitoring & Alerting](MONITORING-STEPS.md)** - Prometheus & Grafana setup
+- **[Exam Scenarios](EXAM-SCENARIOS.md)** - Sample questions with solutions
+
+Perfect for hands-on DevOps exam preparation!

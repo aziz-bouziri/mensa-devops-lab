@@ -1,0 +1,82 @@
+groups:
+  - name: mensa-app-alerts
+    rules:
+      # Application availability alerts
+      - alert: ServiceDown
+        expr: up{job="mensa-server"} == 0
+        for: 1m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Mensa service is down"
+          description: "Mensa server has been down for more than 1 minute"
+
+      # High CPU usage alert
+      - alert: HighCPUUsage
+        expr: rate(container_cpu_usage_seconds_total{container="server"}[5m]) * 100 > 80
+        for: 2m
+        labels:
+          severity: warning
+        annotations:
+          summary: "High CPU usage detected"
+          description: "CPU usage is above 80% for more than 2 minutes"
+
+      # High memory usage alert
+      - alert: HighMemoryUsage
+        expr: (container_memory_usage_bytes{container="server"} / container_spec_memory_limit_bytes{container="server"}) * 100 > 90
+        for: 2m
+        labels:
+          severity: warning
+        annotations:
+          summary: "High memory usage detected"
+          description: "Memory usage is above 90% for more than 2 minutes"
+
+      # HTTP error rate alert
+      - alert: HighErrorRate
+        expr: rate(http_requests_total{status=~"5.."}[5m]) / rate(http_requests_total[5m]) * 100 > 5
+        for: 3m
+        labels:
+          severity: warning
+        annotations:
+          summary: "High HTTP error rate"
+          description: "HTTP 5xx error rate is above 5% for more than 3 minutes"
+
+      # Response time alert
+      - alert: HighResponseTime
+        expr: histogram_quantile(0.95, rate(http_request_duration_seconds_bucket[5m])) > 1
+        for: 2m
+        labels:
+          severity: warning
+        annotations:
+          summary: "High response time"
+          description: "95th percentile response time is above 1 second"
+
+      # Database connection alert
+      - alert: DatabaseConnectionFailed
+        expr: db_connections_active / db_connections_max * 100 > 80
+        for: 1m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Database connection pool nearly exhausted"
+          description: "Active database connections are above 80% of maximum"
+
+      # Pod restart alert
+      - alert: PodRestartingTooOften
+        expr: rate(kube_pod_container_status_restarts_total[15m]) * 60 * 15 > 0
+        for: 0m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Pod is restarting too often"
+          description: "Pod {{ $labels.pod }} in namespace {{ $labels.namespace }} is restarting frequently"
+
+      # Disk space alert
+      - alert: DiskSpaceRunningLow
+        expr: (node_filesystem_avail_bytes / node_filesystem_size_bytes) * 100 < 10
+        for: 5m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Disk space is running low"
+          description: "Disk space is below 10% on {{ $labels.instance }}"
