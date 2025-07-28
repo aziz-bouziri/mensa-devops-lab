@@ -1,0 +1,16 @@
+---
+# Database configuration
+db_port: 5432
+db_name: "mensa"
+db_user: "mensa_user"
+db_max_connections: 100
+
+# Backup configuration
+backup_enabled: true
+backup_schedule: "0 2 * * *"  # Daily at 2 AM
+backup_retention_days: 7
+
+# Performance tuning
+shared_buffers: "256MB"
+effective_cache_size: "1GB"
+max_connections: 100

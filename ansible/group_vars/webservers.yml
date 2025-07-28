@@ -1,0 +1,17 @@
+---
+# Web server configuration
+app_port: 8080
+docker_registry: "your-registry.com"
+app_version: "latest"
+
+# Kubernetes configuration
+k8s_cluster_name: "mensa-cluster"
+k8s_pod_network: "10.244.0.0/16"
+
+# Monitoring
+prometheus_server: "10.0.1.100"
+node_exporter_port: 9100
+
+# Security
+firewall_enabled: true
+ssh_port: 22

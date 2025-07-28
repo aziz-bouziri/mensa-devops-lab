@@ -1,0 +1,28 @@
+---
+- name: Deploy Application
+  hosts: webservers
+  become: yes
+
+  tasks:
+    - name: Create app directory
+      file:
+        path: /opt/myapp
+        state: directory
+
+    - name: Copy application files
+      copy:
+        src: "{{ item }}"
+        dest: /opt/myapp/
+      with_items:
+        - docker-compose.yml
+        - .env
+
+    - name: Pull Docker images
+      shell: docker-compose pull
+      args:
+        chdir: /opt/myapp
+
+    - name: Start application
+      shell: docker-compose up -d
+      args:
+        chdir: /opt/myapp

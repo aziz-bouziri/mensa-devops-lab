@@ -1,0 +1,29 @@
+version: '3.8'
+
+services:
+  server:
+    image: {{ docker_registry }}/{{ app_name }}-server:{{ app_version }}
+    ports:
+      - "{{ app_port }}:8080"
+    environment:
+      - SPRING_PROFILES_ACTIVE=production
+      - DB_HOST={{ hostvars[groups['databases'][0]]['ansible_default_ipv4']['address'] }}
+      - DB_USER=${DB_USER}
+      - DB_PASSWORD=${DB_PASSWORD}
+    networks:
+      - app-network
+    restart: unless-stopped
+
+  client:
+    image: {{ docker_registry }}/{{ app_name }}-client:{{ app_version }}
+    ports:
+      - "80:80"
+    depends_on:
+      - server
+    networks:
+      - app-network
+    restart: unless-stopped
+
+networks:
+  app-network:
+    driver: bridge

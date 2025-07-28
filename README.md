@@ -28,17 +28,21 @@ A comprehensive repository containing ready-to-use DevOps templates and configur
 │   ├── prometheus.yml
 │   ├── alerts/          # Prometheus alerting rules
 │   └── grafana/         # Dashboards & provisioning
-├── scripts/             # Automation scripts
-│   ├── quick-deploy.sh  # Fast deployment
-│   └── k8s-deploy.sh    # Kubernetes deployment
+├── ansible/             # Configuration management
+│   ├── inventory.ini    # Host definitions
+│   ├── site.yml         # Main playbook
+│   ├── tasks/           # Task files
+│   └── playbooks/       # Specific playbooks
 ├── docker-compose.yml   # Multi-service orchestration
 ├── .env.example         # Environment template
 ├── DEPLOYMENT-STEPS.md  # 📋 Manual K8s deployment guide
 ├── DOCKER-STEPS.md      # 🐳 Docker commands reference  
 ├── HELM-STEPS.md        # ⛵ Helm deployment guide
 ├── TERRAFORM-STEPS.md   # 🏗️ Terraform commands reference
+├── ANSIBLE-STEPS.md     # 🔧 Ansible configuration management
 ├── MONITORING-STEPS.md  # 🚨 Prometheus & Grafana alerting
-└── EXAM-SCENARIOS.md    # 🎯 Sample exam questions & solutions
+├── EXAM-SCENARIOS.md    # 🎯 Sample exam questions & solutions
+└── EXAM-COMMANDS.md     # ⚡ Quick command reference cheat sheet
 ```
 
 ## 🚀 Quick Reference
@@ -61,6 +65,11 @@ A comprehensive repository containing ready-to-use DevOps templates and configur
 - Configurable replica count and image tags
 - Built-in ingress support
 
+### Ansible
+- **Host inventory** for server management
+- **Basic playbooks** for common tasks
+- **Simple configuration** management
+
 ### Terraform
 - Kubernetes provider configuration
 - Namespace and deployment resources
@@ -81,7 +90,9 @@ A comprehensive repository containing ready-to-use DevOps templates and configur
 4. **K8s**: Follow `DEPLOYMENT-STEPS.md` for proper namespace deployment
 5. **Helm**: Use `HELM-STEPS.md` for chart-based deployments
 6. **Terraform**: Follow `TERRAFORM-STEPS.md` for infrastructure as code
-7. **Monitoring**: `docker-compose -f monitoring/docker-compose.monitoring.yml up -d`
+6. **Terraform**: Initialize and apply with `terraform init && terraform apply`
+7. **Ansible**: Run playbooks with `ansible-playbook site.yml`
+8. **Monitoring**: `docker-compose -f monitoring/docker-compose.monitoring.yml up -d`
 8. **Alerts**: Access Prometheus (9090), Alertmanager (9093), Grafana (3001)
 
 ### 🔧 Essential Exam Commands
@@ -115,7 +126,9 @@ terraform destroy
 - **[Docker Commands](DOCKER-STEPS.md)** - Container management reference
 - **[Helm Operations](HELM-STEPS.md)** - Chart deployment guide  
 - **[Terraform Workflow](TERRAFORM-STEPS.md)** - Infrastructure as code steps
+- **[Ansible Configuration](ANSIBLE-STEPS.md)** - Server configuration management
 - **[Monitoring & Alerting](MONITORING-STEPS.md)** - Prometheus & Grafana setup
 - **[Exam Scenarios](EXAM-SCENARIOS.md)** - Sample questions with solutions
+- **[Command Cheat Sheet](EXAM-COMMANDS.md)** - ⚡ Quick reference for all tools
 
 Perfect for hands-on DevOps exam preparation!

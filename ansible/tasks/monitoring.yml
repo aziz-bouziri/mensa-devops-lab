@@ -1,0 +1,13 @@
+---
+- name: Create monitoring user
+  user:
+    name: monitoring
+    system: yes
+    shell: /bin/false
+
+- name: Create monitoring directory
+  file:
+    path: /var/log/monitoring
+    state: directory
+    owner: monitoring
+    group: monitoring
