@@ -1,0 +1,37 @@
+# Development environment values
+app:
+  name: mensa-server
+  environment: development
+
+namespace: mensa-dev
+
+replicaCount: 1
+
+image:
+  repository: your-registry/mensa-server
+  tag: dev
+
+service:
+  type: NodePort
+  port: 80
+  targetPort: 8080
+
+ingress:
+  enabled: false
+
+resources:
+  requests:
+    memory: "64Mi"
+    cpu: "50m"
+  limits:
+    memory: "128Mi"
+    cpu: "100m"
+
+autoscaling:
+  enabled: false
+
+config:
+  database:
+    url: "jdbc:postgresql://postgres-dev:5432/mensa_dev"
+  logging:
+    level: "DEBUG"

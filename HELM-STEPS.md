@@ -4,29 +4,44 @@
 
 ### Chart Management
 ```bash
-# Validate chart syntax
+# Create new chart
+helm create my-chart
+
+# Validate chart
 helm lint ./helm
 
-# Dry run to see what would be deployed
-helm install mensa-app ./helm --dry-run --debug
+# Template chart (see generated YAML)
+helm template my-app ./helm
 
-# Template rendering (see generated YAML)
-helm template mensa-app ./helm
+# Template with specific values file
+helm template my-app ./helm -f values-dev.yaml
+
+# Template with custom values
+helm template my-app ./helm --set replicaCount=5
+
+# Package chart
+helm package ./helm
 ```
 
 ### Deploy Application
 ```bash
-# Install chart
+# Install chart with default values
 helm install mensa-app ./helm
 
 # Install to specific namespace
 helm install mensa-app ./helm --namespace mensa --create-namespace
 
+# Install with development values
+helm install mensa-app ./helm -f values-dev.yaml -n mensa-dev
+
+# Install with production values
+helm install mensa-app ./helm -f values-prod.yaml -n mensa-prod
+
 # Install with custom values
 helm install mensa-app ./helm --set replicaCount=3 --set image.tag=v2.0
 
-# Install with values file
-helm install mensa-app ./helm -f custom-values.yaml
+# Dry run installation
+helm install mensa-app ./helm --dry-run --debug
 ```
 
 ### Manage Releases

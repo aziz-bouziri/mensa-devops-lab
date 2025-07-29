@@ -1,0 +1,87 @@
+# Local Development Values
+# Use this file for local development with: helm install mensa-app helm/ -f helm/values-local.yaml
+
+replicaCount: 1
+
+image:
+  repository: mensa-server
+  tag: local
+  pullPolicy: Never  # Use local images only
+
+nameOverride: ""
+fullnameOverride: ""
+
+serviceAccount:
+  create: true
+  annotations: {}
+  name: ""
+
+podAnnotations: {}
+
+podSecurityContext: {}
+
+securityContext: {}
+
+service:
+  type: NodePort
+  port: 8080
+  targetPort: 8080
+
+ingress:
+  enabled: false  # Disable for local development
+
+resources:
+  limits:
+    cpu: 200m
+    memory: 256Mi
+  requests:
+    cpu: 100m
+    memory: 128Mi
+
+autoscaling:
+  enabled: false
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
+
+# Application configuration for local development
+app:
+  name: mensa-app-local
+  version: "1.0.0"
+  environment: development
+  
+config:
+  database:
+    host: "postgres-service"
+    port: 5432
+    name: "mensa_local"
+    username: "admin"
+    password: "localpassword"
+  
+  app:
+    port: 8080
+    logLevel: "debug"
+    jvmOptions: "-Xms128m -Xmx256m"
+
+# PostgreSQL configuration
+postgresql:
+  enabled: true
+  image:
+    tag: "17"
+  auth:
+    username: "admin"
+    password: "localpassword"
+    database: "mensa_local"
+  primary:
+    persistence:
+      enabled: false  # No persistence for local dev
+    resources:
+      limits:
+        cpu: 200m
+        memory: 256Mi
+      requests:
+        cpu: 100m
+        memory: 128Mi

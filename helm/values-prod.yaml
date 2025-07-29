@@ -1,0 +1,45 @@
+# Production environment values
+app:
+  name: mensa-server
+  environment: production
+
+namespace: mensa-prod
+
+replicaCount: 3
+
+image:
+  repository: your-registry/mensa-server
+  tag: stable
+
+service:
+  type: ClusterIP
+  port: 80
+  targetPort: 8080
+
+ingress:
+  enabled: true
+  host: mensa.company.com
+  path: /
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+    cert-manager.io/cluster-issuer: letsencrypt
+
+resources:
+  requests:
+    memory: "256Mi"
+    cpu: "250m"
+  limits:
+    memory: "512Mi"
+    cpu: "500m"
+
+autoscaling:
+  enabled: true
+  minReplicas: 3
+  maxReplicas: 10
+  targetCPU: 70
+
+config:
+  database:
+    url: "jdbc:postgresql://postgres-prod:5432/mensa_production"
+  logging:
+    level: "WARN"

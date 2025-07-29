@@ -1,13 +1,60 @@
+# Application configuration
+app:
+  name: mensa-server
+  environment: production
+
+# Namespace
+namespace: mensa
+
+# Replica count
 replicaCount: 2
 
+# Image configuration
 image:
   repository: your-registry/mensa-server
   tag: latest
 
+# Service configuration
 service:
   type: ClusterIP
   port: 80
+  targetPort: 8080
 
+# Ingress configuration
 ingress:
   enabled: true
   host: mensa.example.com
+  path: /
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+
+# Resource limits
+resources:
+  requests:
+    memory: "128Mi"
+    cpu: "100m"
+  limits:
+    memory: "256Mi"
+    cpu: "200m"
+
+# Autoscaling
+autoscaling:
+  enabled: false
+  minReplicas: 2
+  maxReplicas: 10
+  targetCPU: 80
+
+# Configuration data
+config:
+  database:
+    url: "jdbc:postgresql://postgres:5432/mensa"
+  logging:
+    level: "INFO"
+
+# Secret data
+secrets:
+  database:
+    username: "admin"
+    password: "password123"
+  jwt:
+    secret: "your-jwt-secret-key"
